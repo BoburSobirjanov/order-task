@@ -21,7 +21,7 @@ class UserEntity(
         @Column(nullable = false, unique = true) var username: String,
         @Column(nullable = false, unique = true) var email: String,
         @Column(nullable = false) var address: String,
-        @Column(nullable = false)  @Enumerated(EnumType.STRING) var userRole: UserRole
+        @Column(nullable = false) @Enumerated(EnumType.STRING) var userRole: UserRole
 ) : BaseEntity()
 
 @Entity(name = "categories")
