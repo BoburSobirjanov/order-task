@@ -44,6 +44,7 @@ class BaseRepositoryImpl<T : BaseEntity>(
     override fun findAllNotDeletedForPageable(pageable: Pageable): Page<T> =
             findAll(isNotDeletedSpecification, pageable)
 
+    @Transactional
     override fun trashList(ids: List<Long>): List<T?> = ids.map { trash(it) }
 
     @Transactional
@@ -66,15 +67,35 @@ interface UserRepository : BaseRepository<UserEntity> {
 interface CategoryRepository : BaseRepository<CategoryEntity> {
 
     @Query("select u from categories as u where u.id=:id and u.name=:name and u.deleted=false")
-    fun findByName(id: Long,name: String): CategoryEntity?
+    fun findByName(id: Long, name: String): CategoryEntity?
 
-    fun findByNameAndDeletedFalse(name: String):CategoryEntity?
+    fun findByNameAndDeletedFalse(name: String): CategoryEntity?
 
 
 }
 
 @Repository
-interface ProductRepository : BaseRepository<ProductEntity> {
+interface ProductRepository : BaseRepository<ProductEntity>
+
+@Repository
+interface OrderRepository : BaseRepository<OrderEntity> {
+
+    @Query("select u from orders as u where u.deleted=false and u.user=:user")
+    fun findAllByUserAndDeletedFalse(user: UserEntity, pageable: Pageable): Page<OrderEntity>
+}
+
+@Repository
+interface OrderItemRepository : BaseRepository<OrderItemEntity> {
+
+    fun findByOrderIdAndDeletedFalse(orderId: Long): List<OrderItemEntity>
+    fun findAllByProductIdAndDeletedFalse(productId : Long): List<OrderItemEntity>
+}
+
+@Repository
+interface PaymentRepository : BaseRepository<PaymentEntity> {
+
+    @Query("select u from payments as u where u.deleted=false and u.user=:user")
+    fun findAllByUserAndDeletedFalse(user: UserEntity, pageable: Pageable): Page<PaymentEntity>
 
 }
 

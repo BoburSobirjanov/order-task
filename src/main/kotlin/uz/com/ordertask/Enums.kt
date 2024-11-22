@@ -1,23 +1,29 @@
 package uz.com.ordertask
 
 
-enum class ErrorCodes(val code:Int){
+enum class ErrorCodes(val code: Int) {
 
     USER_HAS_ALREADY_EXISTS_EXCEPTION(400),
     USER_NOT_FOUND_EXCEPTION(401),
     CATEGORY_HAS_ALREADY_EXISTS_EXCEPTION(300),
-    CATEGORY_NOT_FOUND_EXCEPTION(301)
+    CATEGORY_NOT_FOUND_EXCEPTION(301),
+    PRODUCT_NOT_FOUND_EXCEPTION(500),
+    ORDER_NOT_FOUND_EXCEPTION(600),
+    PRODUCT_HAS_NOT_ENOUGH(501),
+    USER_BAD_REQUEST_EXCEPTION(402),
+    PAYMENT_NOT_FOUND_EXCEPTION(700),
+    ORDER_ITEM_NOT_FOUND_EXCEPTION(800)
 
 }
 
-enum class OrderStatus{
+enum class OrderStatus {
     PENDING, DELIVERED, FINISHED, CANCELLED
 }
 
-enum class PaymentMethod{
+enum class PaymentMethod {
     HUMO, UZCARD, PAYME, CASH
 }
 
-enum class UserRole{
-    USER,ADMIN
+enum class UserRole {
+    USER, ADMIN
 }
